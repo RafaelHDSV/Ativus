@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import styles from '../../App.module.scss'
 import { IColumn } from '../../interfaces'
-import { PencilSimple, Plus, Trash } from '@phosphor-icons/react'
+import { Clock, PencilSimple, Plus, Trash } from '@phosphor-icons/react'
 
 interface IColumnProps {
   column: IColumn
@@ -130,7 +130,11 @@ export default function Column({ column, setColumns }: IColumnProps) {
             <Plus />
           </button>
         </form>
-        <p>{column.lastUpdated}</p>
+
+        <>
+          <Clock />
+          <p style={{ fontSize: '0.75rem', color: '#777' }}>{column.lastUpdated}</p>
+        </>
       </div>
     </div>
   )
