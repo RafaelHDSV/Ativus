@@ -20,7 +20,10 @@
     p {
       background-color: seagreen;
       padding: 0.5rem;
-      cursor: pointer;
+
+      &:active {
+        cursor: grabbing;
+      }
     }
   }
 }
