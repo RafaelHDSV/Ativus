@@ -26,3 +26,45 @@
   box-sizing: border-box;
   font-family: var(--font-family);
 }
+
+.primaryButton {
+  background-color: var(--green-500);
+  color: var(--white);
+  border: none;
+  padding: 1rem;
+  border-radius: 12px;
+  font-size: var(--font-size);
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    background-color: var(--green-700);
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.secondaryButton {
+  background-color: var(--green-300);
+  color: var(--white);
+  border: none;
+  padding: 1rem;
+  border-radius: 12px;
+  font-size: var(--font-size);
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    background-color: var(--green-500);
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
