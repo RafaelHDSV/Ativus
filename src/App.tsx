@@ -21,8 +21,12 @@ export default function App() {
     <main className={styles.app}>
       <nav>
         <img style={{ width: '100px' }} src='./logo.png' alt='logo.png' />
-        <button onClick={handleClick}>Adicionar coluna</button>
-        <button onClick={() => setColumns([])}>Limpar colunas</button>
+        <button className='primaryButton' onClick={handleClick}>
+          Adicionar coluna
+        </button>
+        <button className='secondaryButton' onClick={() => setColumns([])}>
+          Limpar colunas
+        </button>
       </nav>
 
       <div className={styles.columnsContainer}>
