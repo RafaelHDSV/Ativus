@@ -83,13 +83,14 @@ export default function Column({ column, setColumns }: IColumnProps) {
   return (
     <div className={styles.column} key={column._id} onDrop={event => handleDrop(event, column._id)} onDragOver={handleDragOver}>
       <div className={styles.content}>
-        <h2>{column.title}</h2>
-        <p>{column.items.length}</p>
-        <p>{column.lastUpdated}</p>
+        <header>
+          <h2>{column.title}</h2>
+          <p>{column.items.length}</p>
+        </header>
 
         <div className={styles.itemsContainer}>
           {column.items.map((item, index) => (
-            <div key={index} className={styles.item}>
+            <div key={index}>
               {editingItem?.columnId === column._id && editingItem.itemIndex === index ? (
                 <div>
                   <input type='text' value={editValue} onChange={event => setEditValue(event.target.value)} />
@@ -99,12 +100,15 @@ export default function Column({ column, setColumns }: IColumnProps) {
               ) : (
                 <div className={styles.item} draggable onDragStart={event => handleDragStart(event, item, column._id)}>
                   {item}
-                  <button onClick={() => handleEditItem(column._id, index, item)}>
-                    <PencilSimple />
-                  </button>
-                  <button onClick={() => handleDeleteItem(column._id, index)}>
-                    <Trash />
-                  </button>
+
+                  <div className={styles.buttons}>
+                    <button onClick={() => handleEditItem(column._id, index, item)}>
+                      <PencilSimple />
+                    </button>
+                    <button onClick={() => handleDeleteItem(column._id, index)}>
+                      <Trash />
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
@@ -112,19 +116,22 @@ export default function Column({ column, setColumns }: IColumnProps) {
         </div>
       </div>
 
-      <form
-        onSubmit={event => {
-          event.preventDefault()
-          const input = event.currentTarget.elements.namedItem('newItem') as HTMLInputElement
-          handleAddItem(column._id, input.value)
-          input.value = ''
-        }}
-      >
-        <input type='text' name='newItem' placeholder='Novo item' />
-        <button type='submit'>
-          <Plus />
-        </button>
-      </form>
+      <div>
+        <form
+          onSubmit={event => {
+            event.preventDefault()
+            const input = event.currentTarget.elements.namedItem('newItem') as HTMLInputElement
+            handleAddItem(column._id, input.value)
+            input.value = ''
+          }}
+        >
+          <input type='text' name='newItem' placeholder='Novo item' />
+          <button type='submit'>
+            <Plus />
+          </button>
+        </form>
+        <p>{column.lastUpdated}</p>
+      </div>
     </div>
   )
 }
