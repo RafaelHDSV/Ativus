@@ -82,31 +82,34 @@ export default function Column({ column, setColumns }: IColumnProps) {
 
   return (
     <div className={styles.column} key={column._id} onDrop={event => handleDrop(event, column._id)} onDragOver={handleDragOver}>
-      <div>
+      <div className={styles.content}>
         <h2>{column.title}</h2>
         <p>{column.items.length}</p>
         <p>{column.lastUpdated}</p>
-        {column.items.map((item, index) => (
-          <div key={index} className={styles.item}>
-            {editingItem?.columnId === column._id && editingItem.itemIndex === index ? (
-              <div>
-                <input type='text' value={editValue} onChange={event => setEditValue(event.target.value)} />
-                <button onClick={handleSaveEdit}>Salvar</button>
-                <button onClick={() => setEditingItem(null)}>Cancelar</button>
-              </div>
-            ) : (
-              <div className={styles.item} draggable onDragStart={event => handleDragStart(event, item, column._id)}>
-                {item}
-                <button onClick={() => handleEditItem(column._id, index, item)}>
-                  <PencilSimple />
-                </button>
-                <button onClick={() => handleDeleteItem(column._id, index)}>
-                  <Trash />
-                </button>
-              </div>
-            )}
-          </div>
-        ))}
+
+        <div className={styles.itemsContainer}>
+          {column.items.map((item, index) => (
+            <div key={index} className={styles.item}>
+              {editingItem?.columnId === column._id && editingItem.itemIndex === index ? (
+                <div>
+                  <input type='text' value={editValue} onChange={event => setEditValue(event.target.value)} />
+                  <button onClick={handleSaveEdit}>Salvar</button>
+                  <button onClick={() => setEditingItem(null)}>Cancelar</button>
+                </div>
+              ) : (
+                <div className={styles.item} draggable onDragStart={event => handleDragStart(event, item, column._id)}>
+                  {item}
+                  <button onClick={() => handleEditItem(column._id, index, item)}>
+                    <PencilSimple />
+                  </button>
+                  <button onClick={() => handleDeleteItem(column._id, index)}>
+                    <Trash />
+                  </button>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
 
       <form
