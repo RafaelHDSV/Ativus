@@ -20,7 +20,7 @@ export default function App() {
   return (
     <main className={styles.app}>
       <nav>
-        <h1>logo</h1>
+        <img style={{ width: '100px' }} src='./logo.png' alt='logo.png' />
         <button onClick={handleClick}>Adicionar coluna</button>
         <button onClick={() => setColumns([])}>Limpar colunas</button>
       </nav>
