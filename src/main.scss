@@ -1,14 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 // font-family: "Montserrat", sans-serif;
 
+// TODO: ADICIONAR FONT
+// <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
 :root {
-  --white: #f0f0f0;
+  --white: #a0a0a0;
+  --light-gray-2: #a0a0a0;
   --green-100: #dad7cd;
   --green-300: #a3b18a;
   --green-500: #588157;
   --green-700: #3a5a40;
   --green-900: #344e41;
-  --gray: #212a31;
+  --light-gray: #2c3136;
+  --gray: #1b1f23;
   --black: #100b00;
 
   --font-family: 'Montserrat', sans-serif;
