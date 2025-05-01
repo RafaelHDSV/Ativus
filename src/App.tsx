@@ -17,10 +17,14 @@ export default function App() {
     setColumns(prevColumns => [...prevColumns, newColumn])
   }
 
+  function resetMockedColumns() {
+    setColumns(MOCKED_VALUES)
+  }
+
   return (
     <main className={styles.app}>
       <nav>
-        <img style={{ width: '100px' }} src='./logo.png' alt='logo.png' />
+        <img onClick={resetMockedColumns} style={{ width: '100px' }} src='./logo.png' alt='logo.png' />
         <button className='primaryButton' onClick={handleClick}>
           Adicionar coluna
         </button>
