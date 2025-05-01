@@ -1,22 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 // font-family: "Montserrat", sans-serif;
 
-// TODO: ADICIONAR FONT
-// <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+// font-family: "Inter", sans-serif;
 
 :root {
-  --white: #a0a0a0;
-  --light-gray-2: #a0a0a0;
-  --green-100: #dad7cd;
-  --green-300: #a3b18a;
-  --green-500: #588157;
-  --green-700: #3a5a40;
-  --green-900: #344e41;
-  --light-gray: #2c3136;
-  --gray: #1b1f23;
-  --black: #100b00;
+  --white: #dad7cd;
+  --light-gray: #a0a0a0;
+  --light-gray-2: #97948b;
+  --light-gray-3: #7d7c79;
+  --gray: #1a1e24;
+  --gray-2: #1a1b1b;
+  --black: #121111;
 
-  --font-family: 'Montserrat', sans-serif;
+  --montserrat: 'Montserrat', sans-serif;
+  --inter: 'Inter', sans-serif;
   --font-size: 16px;
 }
 
@@ -24,22 +22,42 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: var(--font-family);
+  font-family: var(--inter);
+}
+
+::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--gray);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--light-gray-2);
+  border-radius: 10px;
+  border: 2px solid var(--gray);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  cursor: pointer;
+  background-color: var(--light-gray-3);
 }
 
 .primaryButton {
-  background-color: var(--green-500);
+  background-color: var(--gray-2);
   color: var(--white);
-  border: none;
+  border: 1px solid var(--black);
   padding: 1rem;
   border-radius: 12px;
-  font-size: var(--font-size);
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 
   &:hover {
-    background-color: var(--green-700);
+    background-color: var(--black);
     transform: scale(1.05);
   }
 
@@ -49,7 +67,7 @@
 }
 
 .secondaryButton {
-  background-color: var(--green-300);
+  background-color: var(--black);
   color: var(--white);
   border: none;
   padding: 1rem;
@@ -60,7 +78,7 @@
   transition: all 0.3s ease-in-out;
 
   &:hover {
-    background-color: var(--green-500);
+    background-color: var(--black);
     transform: scale(1.05);
   }
 
