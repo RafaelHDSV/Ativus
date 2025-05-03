@@ -24,7 +24,7 @@ export default function App() {
   return (
     <main className={styles.app}>
       <nav className={styles.navbar}>
-        <img className={styles.imageLogo} onClick={resetMockedColumns} src='./logo.png' alt='logo.png' />
+        <div onClick={resetMockedColumns} className={styles.imageLogo}></div>
         <button className='primaryButton' onClick={handleClick}>
           Adicionar coluna
         </button>
