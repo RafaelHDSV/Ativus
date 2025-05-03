@@ -1,8 +1,21 @@
 .app {
   display: flex;
   flex-direction: column;
-  background-color: var(--gray);
+  background-color: $gray;
   height: 100vh;
+
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+
+    .imageLogo {
+      width: 5rem;
+      border-radius: 1rem;
+    }
+  }
 
   .columnsContainer {
     display: flex;
