@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { MOCKED_VALUES } from './constants'
-import { IColumn } from './interfaces'
 import Column from './components/Column/Column'
 import styles from './App.module.scss'
+import { MOCKED_VALUES } from './components/Column/columnConstants'
+import { IColumn } from './components/Column/columnInterfaces'
 
 export default function App() {
   const [columns, setColumns] = useState<IColumn[] | []>(MOCKED_VALUES)

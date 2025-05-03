@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import styles from './Column.module.scss'
-import { IColumn } from '../../interfaces'
 import { Clock, PencilSimple, Plus, Trash } from '@phosphor-icons/react'
+import { IColumn } from './columnInterfaces'
 
 interface IColumnProps {
   column: IColumn

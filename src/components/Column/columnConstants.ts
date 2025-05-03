@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import { IColumn } from './interfaces'
+import { IColumn } from './columnInterfaces'
 
 export const MOCKED_VALUES: IColumn[] = [
   {
