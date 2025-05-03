@@ -6,12 +6,13 @@
 
 :root {
   --white: #dad7cd;
-  --light-gray: #a0a0a0;
-  --light-gray-2: #97948b;
-  --light-gray-3: #7d7c79;
+  --light-gray: #97948b;
   --gray: #1a1e24;
   --gray-2: #1a1b1b;
   --black: #121111;
+
+  --primary-color: #fdd20a;
+  --primary-color-hover: #fdd20ab3;
 
   --montserrat: 'Montserrat', sans-serif;
   --inter: 'Inter', sans-serif;
@@ -31,19 +32,19 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--gray);
+  background: var(--gray-2);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: var(--light-gray-2);
+  background-color: var(--primary-color);
   border-radius: 10px;
   border: 2px solid var(--gray);
 }
 
 ::-webkit-scrollbar-thumb:hover {
+  background-color: var(--primary-color-hover);
   cursor: pointer;
-  background-color: var(--light-gray-3);
 }
 
 .primaryButton {
