@@ -16,18 +16,18 @@
       width: 5rem;
       height: 5rem;
       border-radius: 1rem;
-      background: url('/public/logo.png') center center / cover no-repeat;
+      background: url('/logo.png') center center / cover no-repeat;
       transition: transform 0.3s ease-in-out;
       cursor: pointer;
 
       &:hover {
         transform: scale(1.05);
-        background: url('/public/logo_minimized.png') center center / cover no-repeat;
+        background: url('/logo_minimized.png') center center / cover no-repeat;
       }
 
       &:active {
         transform: scale(0.95);
-        background: url('/public/logo_minimized.png') center center / cover no-repeat;
+        background: url('/logo_minimized.png') center center / cover no-repeat;
       }
     }
   }
