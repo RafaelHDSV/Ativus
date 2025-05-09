@@ -25,12 +25,15 @@ export default function App() {
     <main className={styles.app}>
       <nav className={styles.navbar}>
         <div onClick={resetMockedColumns} className={styles.imageLogo}></div>
-        <button className='primaryButton' onClick={handleClick}>
-          Adicionar coluna
-        </button>
-        <button className='secondaryButton' onClick={() => setColumns([])}>
-          Limpar colunas
-        </button>
+
+        <div className={styles.buttons}>
+          <button className='primaryButton' onClick={handleClick}>
+            Adicionar coluna
+          </button>
+          <button className='secondaryButton' onClick={() => setColumns([])}>
+            Limpar colunas
+          </button>
+        </div>
       </nav>
 
       <div className={styles.columnsContainer}>

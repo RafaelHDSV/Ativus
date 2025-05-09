@@ -30,6 +30,12 @@
         background: url('/logo_minimized.png') center center / cover no-repeat;
       }
     }
+
+    .buttons {
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
+    }
   }
 
   .columnsContainer {
