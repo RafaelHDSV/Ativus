@@ -2,6 +2,7 @@ import { useState } from 'react'
 import styles from './Column.module.scss'
 import { Clock, PencilSimple, Plus, Trash } from '@phosphor-icons/react'
 import { IColumn } from './columnInterfaces'
+import { Input } from 'antd'
 
 interface IColumnProps {
   column: IColumn
@@ -125,7 +126,7 @@ export default function Column({ column, setColumns }: IColumnProps) {
             input.value = ''
           }}
         >
-          <input type='text' name='newItem' placeholder='Novo item' />
+          <Input name='newItem' placeholder='Novo Item' />
           <button type='submit'>
             <Plus />
           </button>
