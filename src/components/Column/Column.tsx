@@ -126,16 +126,18 @@ export default function Column({ column, setColumns }: IColumnProps) {
             input.value = ''
           }}
         >
-          <Input name='newItem' placeholder='Novo Item' />
-          <button type='submit'>
-            <Plus />
-          </button>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Input name='newItem' placeholder='Novo Item' />
+            <button type='submit'>
+              <Plus />
+            </button>
+          </div>
         </form>
 
-        <>
+        <div style={{ display: 'flex', alignItems: 'center', marginTop: '0.5rem', gap: '0.5rem' }}>
           <Clock />
           <p style={{ fontSize: '0.75rem', color: '#777' }}>{column.lastUpdated}</p>
-        </>
+        </div>
       </div>
     </div>
   )
