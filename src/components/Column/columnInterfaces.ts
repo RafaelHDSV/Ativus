@@ -1,3 +1,6 @@
+import { FormInstance } from 'antd'
+import { MessageInstance } from 'antd/es/message/interface'
+
 export interface IColumn {
   _id: number
   title: string
@@ -12,6 +15,8 @@ export interface IColumnFormValues {
 }
 
 export interface IAddNewColumnProps {
+  form: FormInstance
   values: IColumnFormValues
   setCreateColumnModalVisible: (visible: boolean) => void
+  messageApi: MessageInstance
 }
