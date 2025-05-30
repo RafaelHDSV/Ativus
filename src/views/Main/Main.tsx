@@ -1,4 +1,4 @@
-import { Button, Form, Input, Modal } from 'antd'
+import { Button, Form, Input, message, Modal } from 'antd'
 import { useState } from 'react'
 import Column from '../../components/Column/Column'
 import { useColumns } from '../../components/Column/columnFunctions'
@@ -6,6 +6,7 @@ import styles from './Main.module.scss'
 
 export default function Main() {
   const [form] = Form.useForm()
+  const [messageApi, contextHolder] = message.useMessage()
   const [createColumnModalVisible, setCreateColumnModalVisible] =
     useState(false)
 
@@ -19,12 +20,17 @@ export default function Main() {
 
   return (
     <>
+      {contextHolder}
       <Modal
+        className={styles.createColumnModal}
         open={createColumnModalVisible}
         title='Adicionar Coluna'
         okText='Adicionar'
         onOk={() => form.submit()}
-        onCancel={() => setCreateColumnModalVisible(false)}
+        onCancel={() => {
+          form.resetFields()
+          setCreateColumnModalVisible(false)
+        }}
         closable={false}
         width={400}
         centered
@@ -34,8 +40,10 @@ export default function Main() {
           layout='vertical'
           onFinish={(values) => {
             addNewColumn({
+              form,
               values,
-              setCreateColumnModalVisible
+              setCreateColumnModalVisible,
+              messageApi
             })
           }}
           className={styles.createColumnForm}
@@ -45,7 +53,7 @@ export default function Main() {
             label='Nome da Coluna'
             rules={[{ required: true, message: 'Insira o nome da coluna' }]}
           >
-            <Input />
+            <Input autoComplete='off' />
           </Form.Item>
 
           <Form.Item name='description' label='Descrição da Coluna'>
