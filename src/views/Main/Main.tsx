@@ -8,11 +8,18 @@ import styles from './Main.module.scss'
 export default function Main() {
   const [form] = Form.useForm()
   const [messageApi, contextHolder] = message.useMessage()
-  const [createColumnModalVisible, setCreateColumnModalVisible] =
+  const [createEditColumnModalVisible, setCreateEditColumnModalVisible] =
     useState(false)
   const [columnBeingEdited, setColumnBeingEdited] = useState<IColumn | null>(
     null
   )
+
+  const createEditColumnModalVisibleTitle = columnBeingEdited
+    ? 'Editar Coluna'
+    : 'Adicionar Coluna'
+  const createEditColumnModalVisibleOkText = columnBeingEdited
+    ? 'Salvar'
+    : 'Adicionar'
 
   const {
     columns,
@@ -22,18 +29,33 @@ export default function Main() {
     cleanColumns
   } = useColumns()
 
+  const deleteColumn = (columnId: number) => {
+    Modal.confirm({
+      title: 'Tem certeza que deseja excluir esta coluna?',
+      content: 'Essa ação não pode ser desfeita.',
+      okText: 'Sim, excluir',
+      okType: 'danger',
+      cancelText: 'Cancelar',
+      onOk: () => {
+        setColumns((prev) => prev.filter((col) => col._id !== columnId))
+        messageApi.success('Coluna deletada com sucesso!')
+      }
+    })
+  }
+
   return (
     <>
       {contextHolder}
       <Modal
         className={styles.createColumnModal}
-        open={createColumnModalVisible}
-        title='Adicionar Coluna'
-        okText='Adicionar'
+        open={createEditColumnModalVisible}
+        title={createEditColumnModalVisibleTitle}
+        okText={createEditColumnModalVisibleOkText}
         onOk={() => form.submit()}
         onCancel={() => {
           form.resetFields()
-          setCreateColumnModalVisible(false)
+          setColumnBeingEdited(null)
+          setCreateEditColumnModalVisible(false)
         }}
         closable={false}
         width={400}
@@ -44,29 +66,25 @@ export default function Main() {
           layout='vertical'
           onFinish={(values) => {
             if (columnBeingEdited) {
-              // edição
-              const updatedColumns = columns.map((col) => {
-                if (col._id === columnBeingEdited._id) {
-                  return {
-                    ...col,
-                    title: values.name,
-                    description: values.description
-                  }
-                }
-                return col
-              })
-
+              const updatedColumns = columns.map((col) =>
+                col._id === columnBeingEdited._id
+                  ? {
+                      ...col,
+                      title: values.name,
+                      description: values.description
+                    }
+                  : col
+              )
               setColumns(updatedColumns)
               setColumnBeingEdited(null)
-              setCreateColumnModalVisible(false)
+              setCreateEditColumnModalVisible(false)
               form.resetFields()
               messageApi.success('Coluna atualizada com sucesso!')
             } else {
-              // criação
               addNewColumn({
                 form,
                 values,
-                setCreateColumnModalVisible,
+                setCreateEditColumnModalVisible,
                 messageApi
               })
             }
@@ -95,7 +113,7 @@ export default function Main() {
             <Button
               type='primary'
               className='button'
-              onClick={() => setCreateColumnModalVisible(true)}
+              onClick={() => setCreateEditColumnModalVisible(true)}
             >
               Adicionar coluna
             </Button>
@@ -112,8 +130,9 @@ export default function Main() {
               key={column._id}
               column={column}
               setColumns={setColumns}
-              setCreateColumnModalVisible={setCreateColumnModalVisible}
+              setCreateEditColumnModalVisible={setCreateEditColumnModalVisible}
               setColumnBeingEdited={setColumnBeingEdited}
+              deleteColumn={deleteColumn}
               form={form}
             />
           ))}
