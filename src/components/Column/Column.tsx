@@ -3,6 +3,7 @@ import {
   Button,
   Col,
   Dropdown,
+  Form,
   FormInstance,
   Input,
   MenuProps,
@@ -30,6 +31,7 @@ export default function Column({
   deleteColumn,
   form
 }: IColumnProps) {
+  const [createdForm] = Form.useForm()
   const [editingItem, setEditingItem] = useState<{
     columnId: number
     itemIndex: number
@@ -65,13 +67,16 @@ export default function Column({
     )
   }
 
-  const handleAddItem = (columnId: number, newItem: string) => {
+  const handleAddItem = ({ newItem }: { newItem: string }) => {
     if (!newItem.trim()) return
     setColumns((prev) =>
       prev.map((col) =>
-        col._id === columnId ? { ...col, items: [...col.items, newItem] } : col
+        col._id === column._id
+          ? { ...col, items: [...col.items, newItem] }
+          : col
       )
     )
+    createdForm.resetFields()
   }
 
   const handleEditItem = (
@@ -141,7 +146,7 @@ export default function Column({
     >
       <div className={styles.content}>
         <header className={styles.header}>
-          <Row className='w-100'>
+          <Row className='w-100' justify='space-between'>
             <Col>
               <h2>{column.title}</h2>
               <span>({column.items.length})</span>
@@ -158,7 +163,7 @@ export default function Column({
 
         <div className={styles.itemsContainer}>
           {column.items.map((item, index) => (
-            <Fragment key={index}>
+            <Fragment key={`${item}-${index}`}>
               {editingItem?.columnId === column._id &&
               editingItem.itemIndex === index ? (
                 <div className={styles.itemEdit}>
@@ -166,7 +171,9 @@ export default function Column({
                     value={editValue}
                     onChange={(e) => setEditValue(e.target.value)}
                   />
-                  <Button onClick={handleSaveEdit}>Salvar</Button>
+                  <Button type='primary' onClick={handleSaveEdit}>
+                    Salvar
+                  </Button>
                   <Button onClick={() => setEditingItem(null)}>Cancelar</Button>
                 </div>
               ) : (
@@ -193,21 +200,22 @@ export default function Column({
         </div>
       </div>
 
-      <form
-        onSubmit={(e) => {
-          e.preventDefault()
-          const input = e.currentTarget.elements.namedItem(
-            'newItem'
-          ) as HTMLInputElement
-          handleAddItem(column._id, input.value)
-          input.value = ''
-        }}
-      >
-        <div className={styles.newItemForm}>
-          <Input name='newItem' placeholder='Novo Item' />
-          <Button htmlType='submit' icon={<Plus />} />
-        </div>
-      </form>
+      <Form form={createdForm} onFinish={handleAddItem}>
+        <Form.Item name='newItem' noStyle>
+          <Input
+            placeholder='Insira um novo item'
+            autoComplete='off'
+            suffix={
+              <Button
+                htmlType='submit'
+                icon={<Plus />}
+                type='primary'
+                className={styles.addButton}
+              />
+            }
+          />
+        </Form.Item>
+      </Form>
     </div>
   )
 }
