@@ -1,5 +1,11 @@
-import { Clock, PencilSimple, Plus, Trash } from '@phosphor-icons/react'
-import { Button, Input, Modal } from 'antd'
+import {
+  Clock,
+  DotsThree,
+  PencilSimple,
+  Plus,
+  Trash
+} from '@phosphor-icons/react'
+import { Button, Col, Input, Modal, Row } from 'antd'
 import { Fragment, useState } from 'react'
 import styles from './Column.module.scss'
 import { IColumn } from './columnInterfaces'
@@ -120,10 +126,14 @@ export default function Column({ column, setColumns }: IColumnProps) {
     >
       <div className={styles.content}>
         <header className={styles.header}>
-          <div>
-            <h2>{column.title}</h2>
-            <span>({column.items.length})</span>
-          </div>
+          <Row className='w-100'>
+            <Col>
+              <h2>{column.title}</h2>
+              <span>({column.items.length})</span>
+            </Col>
+
+            <DotsThree size={24} />
+          </Row>
 
           <p>{column.description}</p>
         </header>
