@@ -17,11 +17,11 @@
       height: 5rem;
       border-radius: 1rem;
       background: url('/logo.png') center center / cover no-repeat;
-      transition: transform 0.3s ease-in-out;
+      transition: transform 0.5s ease-in-out;
       cursor: pointer;
 
       &:hover {
-        transform: scale(1.05);
+        transform: scale(1.1);
         background: url('/logo_minimized.png') center center / cover no-repeat;
       }
 
