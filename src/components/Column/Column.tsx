@@ -5,7 +5,7 @@ import {
   Plus,
   Trash
 } from '@phosphor-icons/react'
-import { Button, Col, Input, Modal, Row } from 'antd'
+import { Button, Col, Dropdown, Input, MenuProps, Modal, Row } from 'antd'
 import { Fragment, useState } from 'react'
 import { Pressable } from '../Pressable/Pressable'
 import styles from './Column.module.scss'
@@ -14,8 +14,13 @@ import { IColumn } from './columnInterfaces'
 interface IColumnProps {
   column: IColumn
   setColumns: React.Dispatch<React.SetStateAction<IColumn[]>>
+  setCreateColumnModalVisible: (visible: boolean) => void
 }
-export default function Column({ column, setColumns }: IColumnProps) {
+export default function Column({
+  column,
+  setColumns,
+  setCreateColumnModalVisible
+}: IColumnProps) {
   const [modalVisible, setModalVisible] = useState(false)
   const [editingItem, setEditingItem] = useState<{
     columnId: number
@@ -118,6 +123,20 @@ export default function Column({ column, setColumns }: IColumnProps) {
     setModalVisible(true)
   }
 
+  const items: MenuProps['items'] = [
+    {
+      key: 'edit',
+      icon: <PencilSimple size={18} />,
+      label: 'Editar',
+      onClick: () => setCreateColumnModalVisible(true)
+    },
+    {
+      key: 'delete',
+      icon: <Trash size={18} />,
+      label: 'Excluir'
+    }
+  ]
+
   return (
     <div
       className={styles.column}
@@ -132,9 +151,17 @@ export default function Column({ column, setColumns }: IColumnProps) {
               <h2>{column.title}</h2>
               <span>({column.items.length})</span>
             </Col>
-            <Pressable icon>
-              <DotsThree size={24} />
-            </Pressable>
+
+            <Dropdown
+              menu={{ items }}
+              trigger={['click']}
+              arrow
+              placement='bottomRight'
+            >
+              <Pressable icon>
+                <DotsThree size={24} />
+              </Pressable>
+            </Dropdown>
           </Row>
 
           <p>{column.description}</p>
