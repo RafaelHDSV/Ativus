@@ -7,6 +7,7 @@ import {
   FormInstance,
   Input,
   MenuProps,
+  Modal,
   Row
 } from 'antd'
 import { Fragment, useState } from 'react'
@@ -37,6 +38,8 @@ export default function Column({
     itemIndex: number
   } | null>(null)
   const [editValue, setEditValue] = useState('')
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [selectedItem, setSelectedItem] = useState<string | null>(null)
 
   const handleDragStart = (
     e: React.DragEvent,
@@ -116,6 +119,11 @@ export default function Column({
     )
   }
 
+  const showItemDetails = (item: string) => {
+    setSelectedItem(item)
+    setIsModalVisible(true)
+  }
+
   const menuItems: MenuProps['items'] = [
     {
       key: 'edit',
@@ -171,7 +179,6 @@ export default function Column({
                     value={editValue}
                     onChange={(e) => setEditValue(e.target.value)}
                   />
-
                   <Row className={styles.actionButtons}>
                     <Button type='primary' onClick={handleSaveEdit}>
                       Salvar
@@ -187,7 +194,7 @@ export default function Column({
                   draggable
                   onDragStart={(e) => handleDragStart(e, item, column._id)}
                 >
-                  {item}
+                  <div onClick={() => showItemDetails(item)}>{item}</div>
                   <div className={styles.buttons}>
                     <Button
                       style={{ background: '#2a313c', color: '#c4c4c4' }}
@@ -228,6 +235,30 @@ export default function Column({
           />
         </Form.Item>
       </Form>
+
+      {/* Modal de Detalhes do Item */}
+      <Modal
+        title='Detalhes do Item'
+        open={isModalVisible}
+        onCancel={() => setIsModalVisible(false)}
+        footer={null}
+        centered
+      >
+        <p>
+          <strong>Item:</strong> {selectedItem}
+        </p>
+        <p>
+          <strong>Coluna:</strong> {column.title}
+        </p>
+        {column.description && (
+          <p>
+            <strong>Descrição da Coluna:</strong> {column.description}
+          </p>
+        )}
+        <p>
+          <strong>Última Atualização:</strong> {column.lastUpdated}
+        </p>
+      </Modal>
     </div>
   )
 }
