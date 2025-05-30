@@ -1,6 +1,6 @@
 import { Clock, PencilSimple, Plus, Trash } from '@phosphor-icons/react'
 import { Button, Input, Modal } from 'antd'
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 import styles from './Column.module.scss'
 import { IColumn } from './columnInterfaces'
 
@@ -130,7 +130,7 @@ export default function Column({ column, setColumns }: IColumnProps) {
 
         <div className={styles.itemsContainer}>
           {column.items.map((item, index) => (
-            <>
+            <Fragment key={index}>
               <Modal
                 open={modalVisible}
                 onOk={() => setModalVisible(false)}
@@ -194,7 +194,7 @@ export default function Column({ column, setColumns }: IColumnProps) {
                   </div>
                 )}
               </div>
-            </>
+            </Fragment>
           ))}
         </div>
       </div>
