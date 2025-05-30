@@ -17,6 +17,6 @@ export interface IColumnFormValues {
 export interface IAddNewColumnProps {
   form: FormInstance
   values: IColumnFormValues
-  setCreateColumnModalVisible: (visible: boolean) => void
+  setCreateEditColumnModalVisible: (visible: boolean) => void
   messageApi: MessageInstance
 }

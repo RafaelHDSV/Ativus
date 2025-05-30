@@ -9,7 +9,7 @@ export function useColumns() {
   function addNewColumn({
     form,
     values,
-    setCreateColumnModalVisible,
+    setCreateEditColumnModalVisible,
     messageApi
   }: IAddNewColumnProps) {
     try {
@@ -30,7 +30,7 @@ export function useColumns() {
       console.error(err)
     } finally {
       form.resetFields()
-      setCreateColumnModalVisible(false)
+      setCreateEditColumnModalVisible(false)
     }
   }
 
