@@ -83,7 +83,12 @@ export default function Main() {
 
         <div className={styles.columnsContainer}>
           {columns?.map((column) => (
-            <Column key={column._id} column={column} setColumns={setColumns} />
+            <Column
+              key={column._id}
+              column={column}
+              setColumns={setColumns}
+              setCreateColumnModalVisible={setCreateColumnModalVisible}
+            />
           ))}
         </div>
       </main>
