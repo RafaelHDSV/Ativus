@@ -205,6 +205,7 @@ export default function Column({
           <Input
             placeholder='Insira um novo item'
             autoComplete='off'
+            autoFocus
             suffix={
               <Button
                 htmlType='submit'
