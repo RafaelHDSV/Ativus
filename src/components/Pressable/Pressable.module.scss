@@ -27,7 +27,7 @@
     }
 
     &:hover::after {
-      background: $shadow;
+      background: $shadow-default;
     }
   }
 }
