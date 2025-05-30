@@ -2,31 +2,45 @@ import { useState } from 'react'
 import styles from './Column.module.scss'
 import { Clock, PencilSimple, Plus, Trash } from '@phosphor-icons/react'
 import { IColumn } from './columnInterfaces'
-import { Input } from 'antd'
+import { Button, Input, Modal } from 'antd'
 
 interface IColumnProps {
   column: IColumn
   setColumns: React.Dispatch<React.SetStateAction<IColumn[]>>
 }
 export default function Column({ column, setColumns }: IColumnProps) {
-  const [editingItem, setEditingItem] = useState<{ columnId: number; itemIndex: number } | null>(null)
+  const [modalVisible, setModalVisible] = useState(false)
+  const [editingItem, setEditingItem] = useState<{
+    columnId: number
+    itemIndex: number
+  } | null>(null)
   const [editValue, setEditValue] = useState('')
 
-  const handleDragStart = (event: React.DragEvent<HTMLParagraphElement>, item: string, fromColumnId: number) => {
-    event.dataTransfer.setData('text/plain', JSON.stringify({ item, fromColumnId }))
+  const handleDragStart = (
+    event: React.DragEvent<HTMLParagraphElement>,
+    item: string,
+    fromColumnId: number
+  ) => {
+    event.dataTransfer.setData(
+      'text/plain',
+      JSON.stringify({ item, fromColumnId })
+    )
   }
 
-  const handleDrop = (event: React.DragEvent<HTMLDivElement>, toColumnId: number) => {
+  const handleDrop = (
+    event: React.DragEvent<HTMLDivElement>,
+    toColumnId: number
+  ) => {
     event.preventDefault()
     const data = JSON.parse(event.dataTransfer.getData('text/plain'))
     const { item, fromColumnId } = data
 
     if (fromColumnId === toColumnId) return
 
-    setColumns(prevColumns => {
-      const updatedColumns = prevColumns.map(column => {
+    setColumns((prevColumns) => {
+      const updatedColumns = prevColumns.map((column) => {
         if (column._id === fromColumnId) {
-          return { ...column, items: column.items.filter(i => i !== item) }
+          return { ...column, items: column.items.filter((i) => i !== item) }
         }
         if (column._id === toColumnId) {
           return { ...column, items: [...column.items, item] }
@@ -44,10 +58,20 @@ export default function Column({ column, setColumns }: IColumnProps) {
   const handleAddItem = (columnId: number, newItem: string) => {
     if (!newItem.trim()) return
 
-    setColumns(prevColumns => prevColumns.map(column => (column._id === columnId ? { ...column, items: [...column.items, newItem] } : column)))
+    setColumns((prevColumns) =>
+      prevColumns.map((column) =>
+        column._id === columnId
+          ? { ...column, items: [...column.items, newItem] }
+          : column
+      )
+    )
   }
 
-  const handleEditItem = (columnId: number, itemIndex: number, currentValue: string) => {
+  const handleEditItem = (
+    columnId: number,
+    itemIndex: number,
+    currentValue: string
+  ) => {
     setEditingItem({ columnId, itemIndex })
     setEditValue(currentValue)
   }
@@ -55,8 +79,8 @@ export default function Column({ column, setColumns }: IColumnProps) {
   const handleSaveEdit = () => {
     if (!editingItem || !editValue.trim()) return
 
-    setColumns(prevColumns =>
-      prevColumns.map(column => {
+    setColumns((prevColumns) =>
+      prevColumns.map((column) => {
         if (column._id === editingItem.columnId) {
           const updatedItems = [...column.items]
           updatedItems[editingItem.itemIndex] = editValue
@@ -70,10 +94,12 @@ export default function Column({ column, setColumns }: IColumnProps) {
   }
 
   const handleDeleteItem = (columnId: number, itemIndex: number) => {
-    setColumns(prevColumns =>
-      prevColumns.map(column => {
+    setColumns((prevColumns) =>
+      prevColumns.map((column) => {
         if (column._id === columnId) {
-          const updatedItems = column.items.filter((_, index) => index !== itemIndex)
+          const updatedItems = column.items.filter(
+            (_, index) => index !== itemIndex
+          )
           return { ...column, items: updatedItems }
         }
         return column
@@ -81,62 +107,125 @@ export default function Column({ column, setColumns }: IColumnProps) {
     )
   }
 
+  function handleClickItem() {
+    setModalVisible(true)
+  }
+
   return (
-    <div className={styles.column} key={column._id} onDrop={event => handleDrop(event, column._id)} onDragOver={handleDragOver}>
+    <div
+      className={styles.column}
+      key={column._id}
+      onDrop={(event) => handleDrop(event, column._id)}
+      onDragOver={handleDragOver}
+    >
       <div className={styles.content}>
-        <header>
+        <header className={styles.header}>
           <h2>{column.title}</h2>
-          <p>{column.items.length}</p>
+          <span>({column.items.length})</span>
         </header>
 
         <div className={styles.itemsContainer}>
           {column.items.map((item, index) => (
-            <div key={index}>
-              {editingItem?.columnId === column._id && editingItem.itemIndex === index ? (
-                <div>
-                  <input type='text' value={editValue} onChange={event => setEditValue(event.target.value)} />
-                  <button onClick={handleSaveEdit}>Salvar</button>
-                  <button onClick={() => setEditingItem(null)}>Cancelar</button>
+            <>
+              <Modal
+                open={modalVisible}
+                onOk={() => setModalVisible(false)}
+                onCancel={() => setModalVisible(false)}
+                title='Detalhes do Item'
+                closable
+                footer={null}
+                centered
+              >
+                <div className={styles.itemModal}>
+                  <h3>{item}</h3>
+                  <p>Detalhes do item...</p>
+                  <Button
+                    onClick={() => handleEditItem(column._id, index, item)}
+                  >
+                    <PencilSimple />
+                  </Button>
+                  <Button onClick={() => handleDeleteItem(column._id, index)}>
+                    <Trash />
+                  </Button>
                 </div>
-              ) : (
-                <div className={styles.item} draggable onDragStart={event => handleDragStart(event, item, column._id)}>
-                  {item}
+              </Modal>
 
-                  <div className={styles.buttons}>
-                    <button onClick={() => handleEditItem(column._id, index, item)}>
-                      <PencilSimple />
-                    </button>
-                    <button onClick={() => handleDeleteItem(column._id, index)}>
-                      <Trash />
-                    </button>
+              <div key={index}>
+                {editingItem?.columnId === column._id &&
+                editingItem.itemIndex === index ? (
+                  <div>
+                    <Input
+                      type='text'
+                      value={editValue}
+                      onChange={(event) => setEditValue(event.target.value)}
+                    />
+                    <Button onClick={handleSaveEdit}>Salvar</Button>
+                    <Button onClick={() => setEditingItem(null)}>
+                      Cancelar
+                    </Button>
                   </div>
-                </div>
-              )}
-            </div>
+                ) : (
+                  <div
+                    className={styles.item}
+                    draggable
+                    onDragStart={(event) =>
+                      handleDragStart(event, item, column._id)
+                    }
+                    onClick={() => handleClickItem()}
+                  >
+                    {item}
+
+                    <div className={styles.buttons}>
+                      <Button
+                        onClick={() => handleEditItem(column._id, index, item)}
+                      >
+                        <PencilSimple />
+                      </Button>
+                      <Button
+                        onClick={() => handleDeleteItem(column._id, index)}
+                      >
+                        <Trash />
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </>
           ))}
         </div>
       </div>
 
       <div>
         <form
-          onSubmit={event => {
+          onSubmit={(event) => {
             event.preventDefault()
-            const input = event.currentTarget.elements.namedItem('newItem') as HTMLInputElement
+            const input = event.currentTarget.elements.namedItem(
+              'newItem'
+            ) as HTMLInputElement
             handleAddItem(column._id, input.value)
             input.value = ''
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <Input name='newItem' placeholder='Novo Item' />
-            <button type='submit'>
+            <Button htmlType='submit'>
               <Plus />
-            </button>
+            </Button>
           </div>
         </form>
 
-        <div style={{ display: 'flex', alignItems: 'center', marginTop: '0.5rem', gap: '0.5rem' }}>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            marginTop: '0.5rem',
+            gap: '0.5rem'
+          }}
+        >
           <Clock />
-          <p style={{ fontSize: '0.75rem', color: '#777' }}>{column.lastUpdated}</p>
+          <p style={{ fontSize: '0.75rem', color: '#777' }}>
+            {column.lastUpdated}
+          </p>
         </div>
       </div>
     </div>
