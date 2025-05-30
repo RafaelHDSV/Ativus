@@ -7,6 +7,7 @@ import {
 } from '@phosphor-icons/react'
 import { Button, Col, Input, Modal, Row } from 'antd'
 import { Fragment, useState } from 'react'
+import { Pressable } from '../Pressable/Pressable'
 import styles from './Column.module.scss'
 import { IColumn } from './columnInterfaces'
 
@@ -131,8 +132,9 @@ export default function Column({ column, setColumns }: IColumnProps) {
               <h2>{column.title}</h2>
               <span>({column.items.length})</span>
             </Col>
-
-            <DotsThree size={24} />
+            <Pressable icon>
+              <DotsThree size={24} />
+            </Pressable>
           </Row>
 
           <p>{column.description}</p>
