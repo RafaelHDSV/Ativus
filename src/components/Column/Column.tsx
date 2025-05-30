@@ -171,10 +171,15 @@ export default function Column({
                     value={editValue}
                     onChange={(e) => setEditValue(e.target.value)}
                   />
-                  <Button type='primary' onClick={handleSaveEdit}>
-                    Salvar
-                  </Button>
-                  <Button onClick={() => setEditingItem(null)}>Cancelar</Button>
+
+                  <Row className={styles.actionButtons}>
+                    <Button type='primary' onClick={handleSaveEdit}>
+                      Salvar
+                    </Button>
+                    <Button onClick={() => setEditingItem(null)}>
+                      Cancelar
+                    </Button>
+                  </Row>
                 </div>
               ) : (
                 <div

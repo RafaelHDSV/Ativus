@@ -53,6 +53,9 @@
         box-shadow: 0 4px 8px $shadow-default;
         background-color: $gray-darker;
         border: 1px solid $gray-darker;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
 
         &:active {
           cursor: grabbing;
@@ -72,6 +75,15 @@
         &:hover .buttons {
           display: flex;
         }
+      }
+
+      .actionButtons {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 1rem;
+        width: 100%;
+        padding: 1rem 0;
       }
     }
   }
