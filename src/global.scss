@@ -34,6 +34,10 @@
   padding: 1.25rem;
   transition: all 0.3s ease-in-out;
 
+  span {
+    color: $gray-dark;
+  }
+
   &:hover {
     transform: scale(1.05);
   }

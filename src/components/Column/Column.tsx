@@ -190,10 +190,12 @@ export default function Column({
                   {item}
                   <div className={styles.buttons}>
                     <Button
+                      style={{ background: '#2a313c', color: '#c4c4c4' }}
                       onClick={() => handleEditItem(column._id, index, item)}
                       icon={<PencilSimple />}
                     />
                     <Button
+                      style={{ background: '#2a313c', color: '#c4c4c4' }}
                       onClick={() => handleDeleteItem(column._id, index)}
                       icon={<Trash />}
                     />
@@ -205,18 +207,22 @@ export default function Column({
         </div>
       </div>
 
-      <Form form={createdForm} onFinish={handleAddItem}>
+      <Form
+        className={styles.addItem}
+        form={createdForm}
+        onFinish={handleAddItem}
+      >
         <Form.Item name='newItem' noStyle>
           <Input
             placeholder='Insira um novo item'
             autoComplete='off'
             autoFocus
+            styles={{ affixWrapper: { background: '#c4c4c4' }, input: {} }}
             suffix={
               <Button
                 htmlType='submit'
-                icon={<Plus />}
+                icon={<Plus weight='bold' />}
                 type='primary'
-                className={styles.addButton}
               />
             }
           />

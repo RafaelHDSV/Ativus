@@ -51,7 +51,8 @@
         padding: 1rem;
         border-radius: 12px;
         box-shadow: 0 4px 8px $shadow-default;
-        background-color: $gray-darker;
+        background-color: $light-gray;
+        color: $gray-darker;
         border: 1px solid $gray-darker;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -70,6 +71,7 @@
           display: none;
           gap: 0.5rem;
           transition: all 0.3s ease-in-out;
+          color: $gray-dark;
         }
 
         &:hover .buttons {
@@ -84,7 +86,23 @@
         gap: 1rem;
         width: 100%;
         padding: 1rem 0;
+
+        button {
+          background-color: $gray-dark !important;
+          color: $gray-dark;
+        }
       }
+    }
+  }
+
+  .addItem {
+    .ant-input-outlined,
+    input {
+      background: $light-gray !important;
+    }
+
+    button {
+      color: $gray-dark;
     }
   }
 }
