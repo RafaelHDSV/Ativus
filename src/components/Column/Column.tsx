@@ -5,7 +5,16 @@ import {
   Plus,
   Trash
 } from '@phosphor-icons/react'
-import { Button, Col, Dropdown, Input, MenuProps, Modal, Row } from 'antd'
+import {
+  Button,
+  Col,
+  Dropdown,
+  FormInstance,
+  Input,
+  MenuProps,
+  Modal,
+  Row
+} from 'antd'
 import { Fragment, useState } from 'react'
 import { Pressable } from '../Pressable/Pressable'
 import styles from './Column.module.scss'
@@ -15,11 +24,15 @@ interface IColumnProps {
   column: IColumn
   setColumns: React.Dispatch<React.SetStateAction<IColumn[]>>
   setCreateColumnModalVisible: (visible: boolean) => void
+  form: FormInstance
+  setColumnBeingEdited: (column: IColumn | null) => void
 }
 export default function Column({
   column,
   setColumns,
-  setCreateColumnModalVisible
+  setCreateColumnModalVisible,
+  form,
+  setColumnBeingEdited
 }: IColumnProps) {
   const [modalVisible, setModalVisible] = useState(false)
   const [editingItem, setEditingItem] = useState<{
@@ -128,7 +141,14 @@ export default function Column({
       key: 'edit',
       icon: <PencilSimple size={18} />,
       label: 'Editar',
-      onClick: () => setCreateColumnModalVisible(true)
+      onClick: () => {
+        form.setFieldsValue({
+          name: column.title,
+          description: column.description
+        })
+        setColumnBeingEdited(column)
+        setCreateColumnModalVisible(true)
+      }
     },
     {
       key: 'delete',

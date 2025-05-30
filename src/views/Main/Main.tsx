@@ -2,6 +2,7 @@ import { Button, Form, Input, message, Modal } from 'antd'
 import { useState } from 'react'
 import Column from '../../components/Column/Column'
 import { useColumns } from '../../components/Column/columnFunctions'
+import { IColumn } from '../../components/Column/columnInterfaces'
 import styles from './Main.module.scss'
 
 export default function Main() {
@@ -9,6 +10,9 @@ export default function Main() {
   const [messageApi, contextHolder] = message.useMessage()
   const [createColumnModalVisible, setCreateColumnModalVisible] =
     useState(false)
+  const [columnBeingEdited, setColumnBeingEdited] = useState<IColumn | null>(
+    null
+  )
 
   const {
     columns,
@@ -39,12 +43,33 @@ export default function Main() {
           form={form}
           layout='vertical'
           onFinish={(values) => {
-            addNewColumn({
-              form,
-              values,
-              setCreateColumnModalVisible,
-              messageApi
-            })
+            if (columnBeingEdited) {
+              // edição
+              const updatedColumns = columns.map((col) => {
+                if (col._id === columnBeingEdited._id) {
+                  return {
+                    ...col,
+                    title: values.name,
+                    description: values.description
+                  }
+                }
+                return col
+              })
+
+              setColumns(updatedColumns)
+              setColumnBeingEdited(null)
+              setCreateColumnModalVisible(false)
+              form.resetFields()
+              messageApi.success('Coluna atualizada com sucesso!')
+            } else {
+              // criação
+              addNewColumn({
+                form,
+                values,
+                setCreateColumnModalVisible,
+                messageApi
+              })
+            }
           }}
           className={styles.createColumnForm}
         >
@@ -88,6 +113,8 @@ export default function Main() {
               column={column}
               setColumns={setColumns}
               setCreateColumnModalVisible={setCreateColumnModalVisible}
+              setColumnBeingEdited={setColumnBeingEdited}
+              form={form}
             />
           ))}
         </div>
