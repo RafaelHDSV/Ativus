@@ -18,11 +18,18 @@
 
     .header {
       display: flex;
-      align-items: center;
+      flex-direction: column;
+      justify-content: flex-start;
       gap: 0.5rem;
 
-      span {
-        color: $primary-color;
+      div {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        span {
+          color: $primary-color;
+        }
       }
     }
 

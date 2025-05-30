@@ -1,8 +1,8 @@
+import { Clock, PencilSimple, Plus, Trash } from '@phosphor-icons/react'
+import { Button, Input, Modal } from 'antd'
 import { useState } from 'react'
 import styles from './Column.module.scss'
-import { Clock, PencilSimple, Plus, Trash } from '@phosphor-icons/react'
 import { IColumn } from './columnInterfaces'
-import { Button, Input, Modal } from 'antd'
 
 interface IColumnProps {
   column: IColumn
@@ -120,8 +120,12 @@ export default function Column({ column, setColumns }: IColumnProps) {
     >
       <div className={styles.content}>
         <header className={styles.header}>
-          <h2>{column.title}</h2>
-          <span>({column.items.length})</span>
+          <div>
+            <h2>{column.title}</h2>
+            <span>({column.items.length})</span>
+          </div>
+
+          <p>{column.description}</p>
         </header>
 
         <div className={styles.itemsContainer}>
