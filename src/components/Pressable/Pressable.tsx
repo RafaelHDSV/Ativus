@@ -14,10 +14,13 @@ export type IPressableProps = Omit<
 }
 
 export const Pressable = forwardRef<HTMLButtonElement, IPressableProps>(
-  ({ className = '', children, icon, animateHover = true, ...props }, ref) => {
+  (
+    { type, className = '', children, icon, animateHover = true, ...props },
+    ref
+  ) => {
     return (
       <button
-        type='button'
+        type={type ?? 'button'}
         ref={ref}
         className={clsx(
           styles.pressable,
